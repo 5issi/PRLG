@@ -1,6 +1,19 @@
 
 <template name="patients">
     <h2>Patientenliste</h2>
+    <ul>
+    {{#each patient}}
+        <li>{{name}}: {{diagnosis}}</li>
+    {{/each}}
+    </ul>
+</template>
+
+<template name="addPatient">
+    <form>
+        Patienten hinzufuegen: 
+        <input type="text" placeholder="Name des Patienten" name="patientName">
+        <input type="text" placeholder="Diagnose des Patienten" name="patientDiagnosis">
+    </form>
 </template>
 
 <template name="login">
