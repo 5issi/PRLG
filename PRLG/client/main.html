@@ -1,24 +1,4 @@
-
-<template name="patients">
-    <h2>Patientenliste</h2>
-    <ul>
-    {{#each patient}}
-        <li>{{name}}: {{diagnosis}}</li>
-    {{/each}}
-    </ul>
-</template>
-
-<template name="addPatient">
-    <form>
-        Patienten hinzufuegen: 
-        <input type="text" placeholder="Name des Patienten" name="patientName">
-        <input type="text" placeholder="Diagnose des Patienten" name="patientDiagnosis">
-    </form>
-</template>
-
-<template name="login">
-    <h2>Login</h2>
-</template>
+<!--...........................................................HOME-->
 
 <template name="home">
     <p>Willkommen, Therapeut!</p>
@@ -26,17 +6,79 @@
 
 <template name="main">
     <h1>PRLG</h1>
-  <a href="{{pathFor route='home'}}">Home</a>
     {{> navigation}}
     {{> yield}}
     <hr />
     <p>Copyright &copy; Prolog, 2018.</p>
 </template>
 
+<!--..........................................................PATIENTS-->
+
+<template name="patients">
+    <h2>Patientenliste</h2>
+    <form>
+        Patienten hinzufuegen: 
+        <input type="text" placeholder="Name des Patienten" name="patientName">
+        <input type="text" placeholder="Diagnose des Patienten" name="patientDiag">
+        <input type="submit" value="submit">
+    </form> 
+    <button>Patienten hinzufuegen</button>
+    <ul>
+    {{#each patient}}
+        {{> patientItem }} <!-- <li>{{name}}: {{diagnosis}}</li> -->
+    {{/each}}
+    </ul>
+</template>
+
+<template name="patientItem">
+    <li>
+        {{name}}:{{diagnosis}}        
+        [<a href="#" class="delete-patient">Loeschen</a>]
+    </li>
+</template>
+
+<template name="addPatient"> 
+</template>
+
+
+<!--..........................................................THERAPISTS-->
+
+<template name="therapists">
+    <h2>Therapeutenliste</h2>
+    <form>
+        Therapeut(in) hinzufuegen: 
+        <input type="text" placeholder="Name des Therapeuten" name="therapistName">
+        <input type="submit" value="submit">
+    </form> 
+    <ul>
+    {{#each therapist}}
+        {{> therapistItem }} <!-- <li>{{name}}: {{diagnosis}}</li> -->
+    {{/each}}
+    </ul>
+</template>
+
+<template name="therapistItem">
+    <li>
+        {{name}}       
+        [<a href="#" class="delete-therapist">Loeschen</a>]
+    </li>
+</template>
+
+<template name="addTherapist"> 
+</template>
+
+<!--...........................................................ROUTES-->
+
+<template name="login">
+    <h2>Login</h2>
+</template>
+
+
 <template name="navigation">
     <ul>
         <li><a href="{{pathFor route='home'}}">Home</a></li>
         <li><a href="{{pathFor route='patients'}}">Patienten</a></li>
+        <li><a href="{{pathFor route='therapists'}}">Therapeuten</a></li>
         <li><a href="{{pathFor route='login'}}">Login</a></li>
     </ul>
 </template>
