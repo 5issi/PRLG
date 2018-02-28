@@ -103,3 +103,40 @@ Template.therapistItem.events({
 		Therapists.remove({ _id: documentId });
 	}
 });
+
+//........................................................................REGISTER
+Template.register.events({
+    'submit form': function(event){
+        event.preventDefault();
+        var email = $('[name=email]').val();
+        var password = $('[name=password]').val();
+        Accounts.createUser({
+            email: email,
+            password: password
+        });
+        Router.go('home');
+    }
+});
+
+Template.navigation.events({
+	'clocl .logout': function(event){
+		event.preventDefault();
+		Meteor.logout();
+		//Rounter.go('login');
+	}
+});
+
+Template.login.events({
+    'submit form': function(event){
+        event.preventDefault();
+        var email = $('[name=email]').val();
+        var password = $('[name=password]').val();
+        Meteor.loginWithPassword(email, password, function(error){
+		    if(error){
+		        console.log(error.reason);
+		    } else {
+		        Router.go("home");
+		    }
+		});
+    }
+});

@@ -71,14 +71,34 @@
 
 <template name="login">
     <h2>Login</h2>
+    <form class="login">
+        <p>Email: <input type="email" name="email"></p>
+        <p>Passwort: <input type="password" name="password"></p>
+        <p><input type="submit" value="Login"></p>
+    </form>
 </template>
+
+<template name="register">
+    <h2>Registrieren</h2>
+    <form class="register">
+        <p>Email: <input type="email" name="email"></p>
+        <p>Passwort: <input type="password" name="password"></p>
+        <p><input type="submit" value="Registrieren"></p>
+    </form>
+</template>
+
 
 
 <template name="navigation">
     <ul>
         <li><a href="{{pathFor route='home'}}">Home</a></li>
+        {{#if currentUser}}
+        <li><a href="#" class="logout">Logout</a></li>
         <li><a href="{{pathFor route='patients'}}">Patienten</a></li>
         <li><a href="{{pathFor route='therapists'}}">Therapeuten</a></li>
+        {{else}}
         <li><a href="{{pathFor route='login'}}">Login</a></li>
+        <li><a href="{{pathFor route='register'}}">Registrieren</a></li>
+        {{/if}}
     </ul>
 </template>
