@@ -18,11 +18,11 @@
     <h2>Patientenliste</h2>
     <form>
         Patienten hinzufuegen: 
-        <input type="text" placeholder="Name des Patienten" name="patientName">
-        <input type="text" placeholder="Diagnose des Patienten" name="patientDiag">
-        <input type="submit" value="submit">
+        <li><input type="text" placeholder="Name des Patienten" name="patientName"></li>
+        <li><input type="text" placeholder="Diagnose des Patienten" name="patientDiag"></li>
+        <li><input type="text" placeholder="Alter des Patienten" name="patientAge"></li>
+        <li><input type="submit" value="hinzufuegen"></li>
     </form> 
-    <button>Patienten hinzufuegen</button>
     <ul>
     {{#each patient}}
         {{> patientItem }} <!-- <li>{{name}}: {{diagnosis}}</li> -->
@@ -32,7 +32,7 @@
 
 <template name="patientItem">
     <li>
-        {{name}}:{{diagnosis}}        
+        {{name}}: {{diagnosis}}, {{patientAge}}        
         [<a href="#" class="delete-patient">Loeschen</a>]
     </li>
 </template>

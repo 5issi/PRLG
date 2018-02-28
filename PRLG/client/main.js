@@ -3,6 +3,8 @@ import { ReactiveVar } from 'meteor/reactive-var';
 
 import './main.html';
 
+Meteor.subscribe('patients');
+Meteor.subscribe('therapists');
 ///////////////////////////////////////////////////ROUTES
 Router.route('/register');
 
@@ -47,11 +49,13 @@ Template.patients.events({/*
 	    event.preventDefault();
 	    var patientName = $('[name="patientName"]').val();
 	    var patientDiag = $('[name="patientDiag"]').val();
-		Meteor.call('insertPatient', patientName, patientDiag, new Date(), ( error ) => {
+	    var patientAge = $('[date="patientAge"]').val();
+		Meteor.call('insertPatient', patientName, patientDiag, patientAge, new Date(), ( error ) => {
 			if ( error ){ console.log( error );			}
 		});
     $('[name="patientName"]').val('');
     $('[name="patientDiag"]').val('');
+    $('[name="patientAge"]').val('');
 	}
 });
 
