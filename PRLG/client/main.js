@@ -3,8 +3,6 @@ import { ReactiveVar } from 'meteor/reactive-var';
 
 import './main.html';
 
-Meteor.subscribe('patients');
-Meteor.subscribe('therapists');
 ///////////////////////////////////////////////////ROUTES
 Router.route('/register');
 
@@ -20,6 +18,9 @@ Router.route('/patients', {
         } else {
             this.render("login");
         }
+    },
+    waitOn: function(){
+    	return Meteor.subscribe('patients');
     }
 });
 
@@ -33,7 +34,11 @@ Router.route('/therapists', {
         } else {
             this.render("login");
         }
+    },
+    waitOn: function(){ //subscriptions: function(){
+    	return Meteor.subscribe('therapists');
     }
+
 });
 
 
@@ -43,7 +48,8 @@ Router.route('/', {
 });
 
 Router.configure({
-    layoutTemplate: 'main'
+    layoutTemplate: 'main',
+    loadingTemplate: 'loading'
 });
 
 //......................................................................VALIDATION
@@ -166,9 +172,11 @@ Template.therapistItem.events({
 Template.register.events({
     'submit form': function(event){
         event.preventDefault();
+        var userName = $('[name=userName]').val();
         var email = $('[name=email]').val();
         var password = $('[name=password]').val();
         Accounts.createUser({
+        	userName: userName,
 		    email: email,
 		    password: password
 		}, function(error){

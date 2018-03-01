@@ -1,7 +1,11 @@
 <!--...........................................................HOME-->
 
 <template name="home">
-    <p>Willkommen, Therapeut!</p>
+    {{#if currentUser}}
+        <p>Willkommen!</p>
+    {{else}}
+        <p>Willkommen bei Prolog. Registrieren Sie sich jetzt oder loggen Sie sich ein, wenn sie bereits einen Account haben.</p>
+    {{/if}}
 </template>
 
 <template name="main">
@@ -81,6 +85,7 @@
 <template name="register">
     <h2>Registrieren</h2>
     <form class="register">
+        <p>Name: <input type="text" name="userName" required></p>
         <p>Email: <input type="email" name="email" required></p>
         <p>Passwort: <input type="password" name="password" required></p>
         <p><input type="submit" value="Registrieren"></p>
@@ -101,4 +106,8 @@
         <li><a href="{{pathFor route='register'}}">Registrieren</a></li>
         {{/if}}
     </ul>
+</template>
+
+<template name="loading">
+    <p>Laedt..</p>
 </template>

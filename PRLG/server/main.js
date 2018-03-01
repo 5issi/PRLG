@@ -24,9 +24,11 @@ Meteor.methods({
 });
 
 Meteor.publish('patients', function(){
-	return Patientlist.find();
+    var currentUser = this.userId;
+    return Patientlist.find({ createdBy: currentUser });
 });
 
 Meteor.publish('therapists', function(){
-	return Therapists.find();
+    var currentUser = this.userId;
+    return Therapists.find({ createdBy: currentUser });
 });
