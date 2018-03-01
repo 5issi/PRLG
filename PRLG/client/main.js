@@ -10,9 +10,31 @@ Router.route('/register');
 
 Router.route('/login');
 
-Router.route('/patients');
+Router.route('/patients', {
+	name: 'patients',
+    template: 'patients',
+    onBeforeAction: function(){
+        var currentUser = Meteor.userId();
+        if(currentUser){
+            this.next();
+        } else {
+            this.render("login");
+        }
+    }
+});
 
-Router.route('/therapists');
+Router.route('/therapists', {
+	name: 'therapists',
+    template: 'therapists',
+    onBeforeAction: function(){
+        var currentUser = Meteor.userId();
+        if(currentUser){
+            this.next();
+        } else {
+            this.render("login");
+        }
+    }
+});
 
 
 Router.route('/', {
@@ -23,6 +45,32 @@ Router.route('/', {
 Router.configure({
     layoutTemplate: 'main'
 });
+
+//......................................................................VALIDATION
+
+$.validator.setDefaults({
+        rules: { //.......................nicht noetig außer min length
+            email: {
+            	required: true,
+                email: true
+            },
+            password: {
+            	required: true,
+                minlength: 6
+            }
+        },
+        messages: {
+            email: {
+                required: "Bitte geben Sie hier Ihre Mailadresse an.",
+                email: "Dies ist keine gueltige Mailadresse."
+            },
+            password:{
+            	required: "Ein Passwort ist notwendig.",
+            	minlength: "Ein Passwort muss aus mindestens 6 Zeichen bestehen."
+            }
+        }
+ });
+
 //.........................................................................PATIENTS
 Template.patients.helpers({/*
 	'deletePatient': function(){
@@ -35,7 +83,8 @@ Template.patients.helpers({/*
 		else { console.log("Ups");}
 	},*/
 	'patient': function(){
-		return Patientlist.find();
+    	var currentUser = Meteor.userId();
+		return Patientlist.find({ createdBy: currentUser }, {sort: {name: 1}});
 	}
 });
 
@@ -50,7 +99,14 @@ Template.patients.events({/*
 	    var patientName = $('[name="patientName"]').val();
 	    var patientDiag = $('[name="patientDiag"]').val();
 	    var patientAge = $('[date="patientAge"]').val();
-		Meteor.call('insertPatient', patientName, patientDiag, patientAge, new Date(), ( error ) => {
+    	var currentUser = Meteor.userId();
+		Meteor.call('insertPatient', 
+					patientName, 
+					patientDiag, 
+					patientAge, 
+					currentUser,
+					new Date(), 
+					( error ) => {
 			if ( error ){ console.log( error );			}
 		});
     $('[name="patientName"]').val('');
@@ -75,7 +131,8 @@ Template.therapists.helpers({/*
 		Patientlist.remove({name: "Max Mustermann"});
 	},*/
 	'therapist': function(){
-		return Therapists.find();
+    	var currentUser = Meteor.userId();
+		return Therapists.find({ createdBy: currentUser }, {sort: {name: 1}});
 	}
 });
 
@@ -88,7 +145,8 @@ Template.therapists.events({/*
 	'submit form': function(event){
 	    event.preventDefault();
 	    var therapistName = $('[name="therapistName"]').val();
-	    Meteor.call('insertTherapist', therapistName, new Date(), ( error ) => {
+    	var currentUser = Meteor.userId();
+	    Meteor.call('insertTherapist', therapistName, currentUser, new Date(), ( error ) => {
 			if ( error ){ console.log( error );			}
 		});
     $('[name="therapistName"]').val('');
@@ -111,32 +169,88 @@ Template.register.events({
         var email = $('[name=email]').val();
         var password = $('[name=password]').val();
         Accounts.createUser({
-            email: email,
-            password: password
-        });
-        Router.go('home');
+		    email: email,
+		    password: password
+		}, function(error){
+		    if(error){
+		        console.log(error.reason); // Output error if registration fails
+		    } else {
+		        Router.go("home"); // Redirect user if registration succeeds
+		    }
+		});
     }
 });
 
 Template.navigation.events({
-	'clocl .logout': function(event){
+	'click .logout': function(event){
 		event.preventDefault();
 		Meteor.logout();
-		//Rounter.go('login');
+		Rounter.go('login');  // hide patients/ therapists??
 	}
 });
 
 Template.login.events({
     'submit form': function(event){
-        event.preventDefault();
-        var email = $('[name=email]').val();
-        var password = $('[name=password]').val();
-        Meteor.loginWithPassword(email, password, function(error){
-		    if(error){
-		        console.log(error.reason);
-		    } else {
-		        Router.go("home");
-		    }
-		});
     }
 });
+
+
+
+Template.login.onCreated(function(){
+});
+
+Template.login.onRendered(function(){
+    var validator = $('.login').validate({
+        submitHandler: function(event){
+            var email = $('[name=email]').val();
+            var password = $('[name=password]').val();
+            Meteor.loginWithPassword(email, password, function(error){
+                if(error){
+				    if(error.reason == "User not found"){
+				        validator.showErrors({
+				            email: "Zu dieser Mailadresse wurde kein Konto gefunden"    
+				        });
+				    }
+				    if(error.reason == "Incorrect password"){
+				        validator.showErrors({
+				            password: "Dieses Passwort ist nicht korrekt"   
+				        });
+				    }
+                } else {
+                    var currentRoute = Router.current().route.getName();
+                    if(currentRoute == "login"){
+                        Router.go("home");
+                    }
+                }
+            });
+        }
+    });
+});
+
+Template.login.onDestroyed(function(){
+});
+
+Template.register.onRendered(function(){
+    var validator = $('.register').validate({
+        submitHandler: function(event){
+            var email = $('[name=email]').val();
+            var password = $('[name=password]').val();
+            Accounts.createUser({
+                email: email,
+                password: password
+            }, function(error){
+                if(error){
+				    if(error.reason == "Email already exists."){
+				        validator.showErrors({
+				            email: "Diese Mailadresse gehoert bereits zu einem Konto."   
+				        });
+				    }
+                } else {
+                    Router.go("home");
+                }
+            });
+        }    
+    });
+});
+/*...............................................eventuell bei mehr Forms default anlegen
+*/

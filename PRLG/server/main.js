@@ -5,16 +5,21 @@ Meteor.startup(() => {
 });
 
 Meteor.methods({
-	insertPatient(name, diagnosis, age, createdAt){
+	insertPatient(name, diagnosis, age, createdBy, createdAt){
 		Patientlist.insert({
 			name: name, 
 			diagnosis: diagnosis, 
 			age: age,
+			createdBy: createdBy,
 			createdAt: createdAt
 		});
 	},
-	insertTherapist( name, createdAt){
-		Therapists.insert({name:name, createdAt:createdAt});
+	insertTherapist( name, createdBy, createdAt){
+		Therapists.insert({
+			name:name, 
+			createdBy: createdBy,
+			createdAt:createdAt
+		});
 	}
 });
 
