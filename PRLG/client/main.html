@@ -9,7 +9,7 @@
 </template>
 
 <template name="main">
-    <h1>PRLG</h1>
+    <h1>Prolog</h1>
     {{> navigation}}
     {{> yield}}
     <hr />
@@ -71,6 +71,30 @@
 <template name="addTherapist"> 
 </template>
 
+<!--..........................................................MATERIALS-->
+<template name="materials">
+    <h2>Therapiematerial</h2>
+    <form>
+        Material hinzufuegen: 
+        <li><input type="text" placeholder="Name des Materials" name="materialName"></li>
+        <li><input type="text" placeholder="Förderbereich" name="category"></li>
+        <li><input type="text" placeholder="Name des Autors" name="creatorName"></li>
+        <li><input type="text" placeholder="Typ" name="typ"></li>
+        <li><input type="submit" value="hinzufuegen"></li>
+    </form> 
+    <ul>
+        {{#each material}}
+            <li>{{> materialItem}}</li>
+        {{/each}}
+    </ul>
+</template>
+
+<template name="materialItem">
+    <li>
+        {{name}}
+        <!--[<a href="#" class="delete-therapist">Loeschen</a>]   -->
+    </li>
+</template>
 <!--...........................................................ROUTES-->
 
 <template name="login">
@@ -101,6 +125,7 @@
         <li><a href="#" class="logout">Logout</a></li>
         <li><a href="{{pathFor route='patients'}}">Patienten</a></li>
         <li><a href="{{pathFor route='therapists'}}">Therapeuten</a></li>
+        <li><a href="{{pathFor route='materials'}}">Material</a></li>
         {{else}}
         <li><a href="{{pathFor route='login'}}">Login</a></li>
         <li><a href="{{pathFor route='register'}}">Registrieren</a></li>

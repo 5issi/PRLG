@@ -38,7 +38,22 @@ Router.route('/therapists', {
     waitOn: function(){ //subscriptions: function(){
     	return Meteor.subscribe('therapists');
     }
+});
 
+Router.route('/materials', {
+	name: 'materials',
+    template: 'materials',
+    onBeforeAction: function(){
+        var currentUser = Meteor.userId();
+        if(currentUser){
+            this.next();
+        } else {
+            this.render("login");
+        }
+    },
+    waitOn: function(){ //subscriptions: function(){
+    	return Meteor.subscribe('materials');
+    }
 });
 
 
@@ -166,6 +181,44 @@ Template.therapistItem.events({
 		var confirm = window.confirm("Wirklich loeschen?");
 		Therapists.remove({ _id: documentId });
 	}
+});
+
+//.........................................................................MATERIALS
+Template.materials.helpers({
+    'materials': function(){
+    	//console.log('ehm');
+    	//Meteor.call('insertMaterial',"PhonoFit", "Sprachentwicklung", "Uwe Ender", "Spiel", "Sissi");
+    	//console.log('function called');
+        return Materials.find({}, {sort: {name: 1}});
+    }
+});
+
+
+Template.materials.events({
+	'submit form': function(event){
+	    event.preventDefault();
+	    var materialName = $('[name="materialName"]').val();
+	    var category = $('[name="category"]').val();
+	    var creatorName = $('[name="creatorName"]').val();
+	    var typ = $('[name="typ"]').val();
+    	var currentUser = Meteor.userId();
+	    Meteor.call('insertMaterial',materialName, category, creatorName, typ, ( error ) => {
+			if ( error ){ console.log( error );			}
+		});
+    $('[name="materialName"]').val('');
+    $('[name="category"]').val('');
+    $('[name="creatorName"]').val('');
+    $('[name="typ"]').val('');
+	}
+});
+
+Template.materialItem.events({/*
+	'click .delete-material': function(event){
+		event.preventDefault();
+		var documentId = this._id;
+		var confirm = window.confirm("Wirklich loeschen?");
+		Materials.remove({ _id: documentId });
+	}*/
 });
 
 //........................................................................REGISTER

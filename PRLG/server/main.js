@@ -14,11 +14,19 @@ Meteor.methods({
 			createdAt: createdAt
 		});
 	},
-	insertTherapist( name, createdBy, createdAt){
+	insertTherapist(name, createdBy, createdAt){
 		Therapists.insert({
-			name:name, 
+			name: name, 
 			createdBy: createdBy,
 			createdAt:createdAt
+		});
+	},
+	insertMaterial(name, category, creator, typ){
+		Materials.insert({
+			name: name, 
+			category: category,
+			creator: creator,
+			typ: typ
 		});
 	}
 });
@@ -31,4 +39,9 @@ Meteor.publish('patients', function(){
 Meteor.publish('therapists', function(){
     var currentUser = this.userId;
     return Therapists.find({ createdBy: currentUser });
+});
+
+Meteor.publish('materials', function(){
+    //var currentUser = this.userId;
+    return Materials.find({});
 });
