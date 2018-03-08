@@ -70,7 +70,7 @@ Router.configure({
 //......................................................................VALIDATION
 
 $.validator.setDefaults({
-        rules: { //.......................nicht noetig außer min length
+        rules: { 
             email: {
             	required: true,
                 email: true
