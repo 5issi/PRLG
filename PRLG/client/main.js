@@ -56,6 +56,14 @@ Router.route('/materials', {
     }
 });
 
+Router.route('materials/:_id', {
+	name: 'materialPage',
+    template: 'materialPage',
+    data: function(){
+        var currentMaterial = this.params._id;
+        return Materials.findOne({ _id: currentMaterial });
+    }
+});
 
 Router.route('/', {
 	name: 'home',
@@ -185,11 +193,8 @@ Template.therapistItem.events({
 
 //.........................................................................MATERIALS
 Template.materials.helpers({
-    'materials': function(){
-    	//console.log('ehm');
-    	//Meteor.call('insertMaterial',"PhonoFit", "Sprachentwicklung", "Uwe Ender", "Spiel", "Sissi");
-    	//console.log('function called');
-        return Materials.find({}, {sort: {name: 1}});
+    'material': function(){
+        return Materials.find({}, {sort: {materialName: 1}});
     }
 });
 

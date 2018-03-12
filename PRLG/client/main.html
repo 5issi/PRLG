@@ -63,7 +63,7 @@
 
 <template name="therapistItem">
     <li>
-        {{name}}       
+        {{name}}
         [<a href="#" class="delete-therapist">Loeschen</a>]
     </li>
 </template>
@@ -84,16 +84,17 @@
     </form> 
     <ul>
         {{#each material}}
-            <li>{{> materialItem}}</li>
+            {{> materialItem }}
         {{/each}}
     </ul>
 </template>
 
 <template name="materialItem">
-    <li>
-        {{name}}
-        <!--[<a href="#" class="delete-therapist">Loeschen</a>]   -->
-    </li>
+        <li><a href="{{pathFor route='materialPage'}}">{{materialName}}: {{category}}: {{creator}}</a></li>
+</template>
+
+<template name="materialPage">
+    <h2>Hello, {{materialName}}</h2>
 </template>
 <!--...........................................................ROUTES-->
 

@@ -21,9 +21,9 @@ Meteor.methods({
 			createdAt:createdAt
 		});
 	},
-	insertMaterial(name, category, creator, typ){
+	insertMaterial(materialName, category, creator, typ){
 		Materials.insert({
-			name: name, 
+			materialName: materialName, 
 			category: category,
 			creator: creator,
 			typ: typ
