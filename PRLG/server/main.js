@@ -21,11 +21,12 @@ Meteor.methods({
 			createdAt:createdAt
 		});
 	},
-	insertMaterial(materialName, category, creator, typ){
+	insertMaterial(materialName, partOf,  creator,category, typ){
 		Materials.insert({
 			materialName: materialName, 
-			category: category,
+			partOf: partOf,
 			creator: creator,
+			category: category,
 			typ: typ
 		});
 	}

@@ -56,12 +56,15 @@ Router.route('/materials', {
     }
 });
 
-Router.route('materials/:_id', {
+Router.route('/materials/:_id', {
 	name: 'materialPage',
     template: 'materialPage',
     data: function(){
         var currentMaterial = this.params._id;
         return Materials.findOne({ _id: currentMaterial });
+    },
+    subscriptions: function(){ //subscriptions: function(){
+    	return Meteor.subscribe('materials');
     }
 });
 
@@ -199,18 +202,20 @@ Template.materials.helpers({
 });
 
 
-Template.materials.events({
+Template.addMaterial.events({
 	'submit form': function(event){
 	    event.preventDefault();
 	    var materialName = $('[name="materialName"]').val();
+	    var partOf = $('[name="partOf"]').val();
 	    var category = $('[name="category"]').val();
 	    var creatorName = $('[name="creatorName"]').val();
 	    var typ = $('[name="typ"]').val();
     	var currentUser = Meteor.userId();
-	    Meteor.call('insertMaterial',materialName, category, creatorName, typ, ( error ) => {
+	    Meteor.call('insertMaterial',materialName, creatorName, category,  typ, ( error ) => {
 			if ( error ){ console.log( error );			}
 		});
     $('[name="materialName"]').val('');
+    $('[name="partOf"]').val('');
     $('[name="category"]').val('');
     $('[name="creatorName"]').val('');
     $('[name="typ"]').val('');
@@ -225,6 +230,8 @@ Template.materialItem.events({/*
 		Materials.remove({ _id: documentId });
 	}*/
 });
+
+
 
 //........................................................................REGISTER
 Template.register.events({

@@ -72,16 +72,21 @@
 </template>
 
 <!--..........................................................MATERIALS-->
-<template name="materials">
-    <h2>Therapiematerial</h2>
+<template name="addMaterial">
     <form>
         Material hinzufuegen: 
         <li><input type="text" placeholder="Name des Materials" name="materialName"></li>
+        <li><input type="text" placeholder="Reihe" name="partOf"></li>
         <li><input type="text" placeholder="Förderbereich" name="category"></li>
         <li><input type="text" placeholder="Name des Autors" name="creatorName"></li>
         <li><input type="text" placeholder="Typ" name="typ"></li>
         <li><input type="submit" value="hinzufuegen"></li>
     </form> 
+</template>
+
+<template name="materials">
+    <h2>Therapiematerial</h2>
+    {{> addMaterial }}
     <ul>
         {{#each material}}
             {{> materialItem }}
@@ -90,11 +95,11 @@
 </template>
 
 <template name="materialItem">
-        <li><a href="{{pathFor route='materialPage'}}">{{materialName}}: {{category}}: {{creator}}</a></li>
+        <li><a href="{{pathFor route='materialPage'}}">{{materialName}} <br> {{partOf}} <br> {{creator}} <br> {{category}}</a></li>
 </template>
 
-<template name="materialPage">
-    <h2>Hello, {{materialName}}</h2>
+<template name="materialPage">   
+    <h2>{{materialName}}</h2>
 </template>
 <!--...........................................................ROUTES-->
 
