@@ -9,9 +9,15 @@
 </template>
 
 <template name="main">
-    <h1>Prolog</h1>
-    {{> navigation}}
-    {{> yield}}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <h1>Prolog</h1>
+                {{> navigation}}
+                {{> yield}}
+            </div>
+        </div>
+    </div>
     <hr />
     <p>Copyright &copy; Prolog, 2018.</p>
 </template>
@@ -19,25 +25,44 @@
 <!--..........................................................PATIENTS-->
 
 <template name="patients">
-    <h2>Patientenliste</h2>
-    <form>
-        Patienten hinzufuegen: 
-        <li><input type="text" placeholder="Name des Patienten" name="patientName"></li>
-        <li><input type="text" placeholder="Diagnose des Patienten" name="patientDiag"></li>
-        <li><input type="text" placeholder="Alter des Patienten" name="patientAge"></li>
-        <li><input type="submit" value="hinzufuegen"></li>
-    </form> 
-    <ul>
-    {{#each patient}}
-        {{> patientItem }} <!-- <li>{{name}}: {{diagnosis}}</li> -->
-    {{/each}}
-    </ul>
+    <div class="row">
+        <div class="col-xs-12">
+            <h2>Patientenliste</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-8">
+            <ul class="list-group">
+            {{#each patient}}
+                {{> patientItem }}<!-- <li>{{name}}: {{diagnosis}}</li> -->
+            {{/each}}
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-8">
+            <form>
+                <div class="form-group">
+                Neuer Patient:  
+                    <input type="text" class="form-control" placeholder="Vorname des Patienten" name="patientSurName">
+                    <input type="text" class="form-control" placeholder="Nachname des Patienten" name="patientLastName">
+                    <input type="text" class="form-control" placeholder="Diagnose des Patienten" name="patientDiag">
+                    <input type="number" class="form-control" placeholder="Alter des Patienten" name="patientAge">
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-success btn-lg btn-block" value="hinzufügen">
+                </div>
+            </form> 
+        </div>
+    </div>
 </template>
 
 <template name="patientItem">
-    <li>
-        {{name}}: {{diagnosis}}, {{patientAge}}        
-        [<a href="#" class="delete-patient">Loeschen</a>]
+    <li class="list-group-item"> 
+        {{patientSurName}} {{patientLastName}}: {{diagnosis}} {{patientAge}} <!--TODO: fix age--> 
+        <a href="#" class="delete-patient btn btn-danger btn btn-primary btn-xs">x</a>
     </li>
 </template>
 
@@ -48,23 +73,42 @@
 <!--..........................................................THERAPISTS-->
 
 <template name="therapists">
-    <h2>Therapeutenliste</h2>
-    <form>
-        Therapeut(in) hinzufuegen: 
-        <input type="text" placeholder="Name des Therapeuten" name="therapistName">
-        <input type="submit" value="hinzufuegen">
-    </form> 
-    <ul>
-    {{#each therapist}}
-        {{> therapistItem }} <!-- <li>{{name}}: {{diagnosis}}</li> -->
-    {{/each}}
-    </ul>
+    <div class="row">
+        <div class="col-xs-12">
+            <h2>Therapeutenliste</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <ul class="list-group">
+                {{#each therapist}}
+                    {{> therapistItem }} <!-- <li>{{name}}: {{diagnosis}}</li> -->
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+        <form>
+            <div class="form-group">
+            Therapeut(in) hinzufuegen: 
+            <input type="text" class="form-control" placeholder="Anrede" name="anrede">
+            <input type="text" class="form-control" placeholder="Vorname des Therapeuten" name="therapistSurName">
+            <input type="text" class="form-control" placeholder="Nachname des Therapeuten" name="therapistLastName">
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-success btn-lg btn-block" value="hinzufügen">
+            </div>
+        </form> 
+        </div>
+    </div>
 </template>
 
 <template name="therapistItem">
-    <li>
-        {{name}}
-        [<a href="#" class="delete-therapist">Loeschen</a>]
+    <li class="list-group-item">
+        {{therapistSurName}} {{therapistLastName}}
+        <a href="#" class="delete-therapist btn btn-danger btn btn-primary btn-xs">x</a>
     </li>
 </template>
 
@@ -73,29 +117,49 @@
 
 <!--..........................................................MATERIALS-->
 <template name="addMaterial">
-    <form>
-        Material hinzufuegen: 
-        <li><input type="text" placeholder="Name des Materials" name="materialName"></li>
-        <li><input type="text" placeholder="Reihe" name="partOf"></li>
-        <li><input type="text" placeholder="Förderbereich" name="category"></li>
-        <li><input type="text" placeholder="Name des Autors" name="creatorName"></li>
-        <li><input type="text" placeholder="Typ" name="typ"></li>
-        <li><input type="submit" value="hinzufuegen"></li>
-    </form> 
+    <div class="row">
+        <div class="col-xs-12">
+            <form>
+                <div class="form-group">
+                    Material hinzufügen: 
+                    <input type="text" class="form-control" placeholder="Name des Materials" name="materialName">
+                    <input type="text" class="form-control" placeholder="Reihe" name="partOf">
+                    <input type="text" class="form-control" placeholder="Förderbereich" name="category">
+                    <input type="text" class="form-control" placeholder="Name des Autors" name="creatorName">
+                    <input type="text" class="form-control" placeholder="Typ" name="typ">
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-success btn-lg btn-block" value="hinzufügen">
+                </div>
+            </form> 
+        </div>
+    </div>
 </template>
 
 <template name="materials">
-    <h2>Therapiematerial</h2>
+    <div class="row">
+        <div class="col-xs-12">
+            <h2>Therapiematerial</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <ul class="list-group">
+                {{#each material}}
+                    {{> materialItem }}
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+    
     {{> addMaterial }}
-    <ul>
-        {{#each material}}
-            {{> materialItem }}
-        {{/each}}
-    </ul>
 </template>
 
 <template name="materialItem">
-        <li><a href="{{pathFor route='materialPage'}}">{{materialName}} <br> {{partOf}} <br> {{creator}} <br> {{category}}</a></li>
+    <li class="list-group-item"> 
+        <a href="{{pathFor route='materialPage'}}"><strong>{{materialName}} </strong><br> <small> {{partOf}}, {{creator}}, {{category}} </small></a>
+    </li>
 </template>
 
 <template name="materialPage">   
@@ -104,22 +168,44 @@
 <!--...........................................................ROUTES-->
 
 <template name="login">
-    <h2>Login</h2>
-    <form class="login">
-        <p>Email: <input type="email" name="email" required></p>
-        <p>Passwort: <input type="password" name="password" required></p>
-        <p><input type="submit" value="Login"></p>
-    </form>
+    <div class="row">
+        <div class="col-xs-12">
+            <h2>Login</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <form class="login">
+                <div class="form-group">
+                    <p>eMail: <input type="email"  class="form-control" name="email" required></p>
+                    <p>Passwort: <input type="password"  class="form-control" name="password" required></p>
+                    <p><input type="submit" class="btn btn-success btn-lg btn-block" value="Login"></p>
+                </div>
+            </form>
+        </div>
+    </div>
 </template>
 
 <template name="register">
-    <h2>Registrieren</h2>
-    <form class="register">
-        <p>Name: <input type="text" name="userName" required></p>
-        <p>Email: <input type="email" name="email" required></p>
-        <p>Passwort: <input type="password" name="password" required></p>
-        <p><input type="submit" value="Registrieren"></p>
-    </form>
+    <div class="row">
+        <div class="col-xs-12">
+            <h2>Registrieren</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <form class="register">
+                <div class="form-group">
+        <p>Name der Praxis: <input type="text" class="form-control" name="userName" required></p>
+        <p>Email: <input type="email" class="form-control" name="email" required></p>
+        <p>Passwort: <input type="password" class="form-control" name="password" required></p>
+        <p><input type="submit" class="btn btn-success btn-lg btn-block" value="Registrieren"></p>
+                </div>
+            </form>
+        </div>
+    </div>
 </template>
 
 

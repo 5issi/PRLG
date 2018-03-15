@@ -5,28 +5,31 @@ Meteor.startup(() => {
 });
 
 Meteor.methods({
-	insertPatient(name, diagnosis, age, createdBy, createdAt){
+	insertPatient(patientSurName, patientLastName, diagnosis, age, createdBy, createdAt){
 		Patientlist.insert({
-			name: name, 
+			patientSurName: patientSurName,
+			patientLastName: patientLastName, 
 			diagnosis: diagnosis, 
 			age: age,
 			createdBy: createdBy,
 			createdAt: createdAt
 		});
 	},
-	insertTherapist(name, createdBy, createdAt){
+	insertTherapist(therapistSurName, therapistLastName, anrede, createdBy, createdAt){
 		Therapists.insert({
-			name: name, 
+			therapistSurName: therapistSurName,
+			therapistLastName: therapistLastName,
+			anrede: anrede,
 			createdBy: createdBy,
 			createdAt:createdAt
 		});
 	},
-	insertMaterial(materialName, partOf,  creator,category, typ){
+	insertMaterial(materialName, partOf, category, creator, typ){
 		Materials.insert({
 			materialName: materialName, 
 			partOf: partOf,
-			creator: creator,
 			category: category,
+			creator: creator,
 			typ: typ
 		});
 	}

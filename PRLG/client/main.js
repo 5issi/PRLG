@@ -128,12 +128,14 @@ Template.patients.events({/*
 	}*/	
 	'submit form': function(event){
 	    event.preventDefault();
-	    var patientName = $('[name="patientName"]').val();
+	    var patientSurName = $('[name="patientSurName"]').val();
+	    var patientLastName = $('[name="patientLastName"]').val();
 	    var patientDiag = $('[name="patientDiag"]').val();
 	    var patientAge = $('[date="patientAge"]').val();
     	var currentUser = Meteor.userId();
 		Meteor.call('insertPatient', 
-					patientName, 
+					patientSurName, 
+					patientLastName,
 					patientDiag, 
 					patientAge, 
 					currentUser,
@@ -141,7 +143,8 @@ Template.patients.events({/*
 					( error ) => {
 			if ( error ){ console.log( error );			}
 		});
-    $('[name="patientName"]').val('');
+    $('[name="patientSurName"]').val('');
+    $('[name="patientLastName"]').val('');
     $('[name="patientDiag"]').val('');
     $('[name="patientAge"]').val('');
 	}
@@ -151,8 +154,8 @@ Template.patientItem.events({
 	'click .delete-patient': function(event){
 		event.preventDefault();
 		var documentId = this._id;
-		var confirm = window.confirm("Wirklich loeschen?");
-		Patientlist.remove({ _id: documentId });
+		var confirm = window.confirm("Möchten Sie den Patienten wirklich löschen?");
+		if (confirm){ Patientlist.remove({ _id: documentId }); }
 	}
 });
 
@@ -176,12 +179,22 @@ Template.therapists.events({/*
 	}*/	
 	'submit form': function(event){
 	    event.preventDefault();
-	    var therapistName = $('[name="therapistName"]').val();
+	    var therapistSurName = $('[name="therapistSurName"]').val();
+	    var therapistLastName = $('[name="therapistLastName"]').val();
+	    var anrede = $('[name="anrede"]').val();
     	var currentUser = Meteor.userId();
-	    Meteor.call('insertTherapist', therapistName, currentUser, new Date(), ( error ) => {
+	    Meteor.call('insertTherapist', 
+	    			therapistSurName, 
+	    			therapistLastName, 
+	    			anrede, 
+	    			currentUser, 
+	    			new Date(), 
+	    			( error ) => {
 			if ( error ){ console.log( error );			}
 		});
-    $('[name="therapistName"]').val('');
+    $('[name="therapistSurName"]').val('');
+    $('[name="therapistLastName"]').val('');
+    $('[name="anrede"]').val('');
 	}
 });
 
@@ -189,8 +202,8 @@ Template.therapistItem.events({
 	'click .delete-therapist': function(event){
 		event.preventDefault();
 		var documentId = this._id;
-		var confirm = window.confirm("Wirklich loeschen?");
-		Therapists.remove({ _id: documentId });
+		var confirm = window.confirm("Möchten Sie die Therapeutin wirklich löschen?");
+		if (confirm){ Therapists.remove({ _id: documentId }); }
 	}
 });
 
@@ -211,7 +224,7 @@ Template.addMaterial.events({
 	    var creatorName = $('[name="creatorName"]').val();
 	    var typ = $('[name="typ"]').val();
     	var currentUser = Meteor.userId();
-	    Meteor.call('insertMaterial',materialName, creatorName, category,  typ, ( error ) => {
+	    Meteor.call('insertMaterial',materialName, partOf, category, creatorName, typ, ( error ) => {
 			if ( error ){ console.log( error );			}
 		});
     $('[name="materialName"]').val('');
