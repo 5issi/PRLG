@@ -244,8 +244,12 @@ Template.materialItem.events({/*
 	}*/
 });
 
-
-
+Template.phonoFit.events({
+    'click .spielen': function(event){
+    Meteor.call('displayMemory');
+    console.log("STAP");
+    }
+});
 //........................................................................REGISTER
 Template.register.events({
     'submit form': function(event){

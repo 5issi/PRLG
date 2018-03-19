@@ -32,7 +32,48 @@ Meteor.methods({
 			creator: creator,
 			typ: typ
 		});
+	},
+	displayMemory(){
+		console.log("wir kommen in die Funktion hinein");
+	    let card = document.getElementsByClassName("card");
+	    let cards = [...card];
+	    for (var i=0; i < cards.length; i++){
+	        cards[i].addEventListener("click", displayCard);
+	    };
+	    var displayCard = function(){
+	        this.classList.toggle("open");
+	        this.classList.toggle("show");
+	        this.classList.toggle("disabled");
+	    }
+	    var shuffle = function(array){
+	        var currentIndex = array.length, temporaryValue, randomIndex;
+	        while(currentIndex !== 0){
+	            randomIndex = Math.floor(Math.random()*currentIndex);
+	            currentIndex -= 1;
+	            temporaryValue = array[currentIndex];
+	            array[currentIndex] = array[randomIndex];
+	            array[randomIndex] = temporaryValue;
+	        }
+	        return array;
+	    }
+
+		console.log("es wurde geshuffled");
+	    const deck = document.querySelector(".deck");
+	    function startGame(){
+	        var shuffledCards = shuffle(cards);
+	        for(var i=0; i<shuffledCards.length; i++){
+	            [].forEach.call(shuffledCards, function(item){
+	                deck.appendChild(item);
+	            });
+	        }
+	    }
+
+		console.log("wir starten gleich das Spiel");
+	    startGame();
+
+		console.log("Spiel gestartet");
 	}
+
 });
 
 Meteor.publish('patients', function(){

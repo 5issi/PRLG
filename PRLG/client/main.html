@@ -164,6 +164,13 @@
 
 <template name="materialPage">   
     <h2>{{materialName}}</h2>
+    {{#if materialName = "PhonoFit: Anfang gleich... das reicht!"}}
+        {{> phonoFit }}
+    {{/if}}
+</template>
+
+<template name="phonoFit">
+    <p><input type="spielen" class="btn btn-default btn-lg btn-block" value="Spielen"></p>
 </template>
 <!--...........................................................ROUTES-->
 
