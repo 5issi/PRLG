@@ -245,7 +245,8 @@ Template.materialItem.events({/*
 });
 
 Template.phonoFit.events({
-    'click .spielen': function(event){
+    'click .button': function(event){
+    console.log("sind im events-Teil");
     Meteor.call('displayMemory');
     console.log("STAP");
     }
