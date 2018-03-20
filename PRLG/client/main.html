@@ -170,7 +170,18 @@
 </template>
 
 <template name="phonoFit">
-    <p><input type="button" class="btn btn-default btn-lg btn-block" value="Spielen"></p>
+    <div class="row">
+        <div class="col-xs-12">
+            <form>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Mit wie vielen Karten möchtest du spielen?" name="cardInput">
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-default btn-lg btn-block" value="Spielen">
+                </div>
+            </form> 
+        </div>
+    </div>
 </template>
 <!--...........................................................ROUTES-->
 

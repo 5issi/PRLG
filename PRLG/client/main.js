@@ -245,10 +245,10 @@ Template.materialItem.events({/*
 });
 
 Template.phonoFit.events({
-    'click .button': function(event){
-    console.log("sind im events-Teil");
-    Meteor.call('displayMemory');
-    console.log("STAP");
+	'submit form': function(event){
+	    event.preventDefault();
+	    var cardInput = $('[name="cardInput"]').val();
+    	Meteor.call('displayMemory');
     }
 });
 //........................................................................REGISTER
