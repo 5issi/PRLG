@@ -4,6 +4,23 @@ Meteor.startup(() => {
   // code to run on server at startup
 });
 
+Meteor.publish('patients', function(){
+    var currentUser = this.userId;
+    return Patientlist.find({ createdBy: currentUser });
+});
+
+Meteor.publish('therapists', function(){
+    var currentUser = this.userId;
+    return Therapists.find({ createdBy: currentUser });
+});
+
+Meteor.publish('materials', function(){
+    //var currentUser = this.userId;
+    return Materials.find({});
+});
+
+
+
 Meteor.methods({
 	insertPatient(patientSurName, patientLastName, diagnosis, age, createdBy, createdAt){
 		Patientlist.insert({
@@ -33,8 +50,9 @@ Meteor.methods({
 			typ: typ
 		});
 	},
+
 	displayMemory(){
-		console.log("wir kommen in die Funktion hinein");
+		console.log("error not here yet");
 		var Memory = {
 
 		init: function(cards){
@@ -209,22 +227,6 @@ Meteor.methods({
 	];
     
 	Memory.init(cards);
-
-},
-
-Meteor.publish('patients', function(){
-    var currentUser = this.userId;
-    return Patientlist.find({ createdBy: currentUser });
+	console.log("yay");
+	},
 });
-
-Meteor.publish('therapists', function(){
-    var currentUser = this.userId;
-    return Therapists.find({ createdBy: currentUser });
-});
-
-Meteor.publish('materials', function(){
-    //var currentUser = this.userId;
-    return Materials.find({});
-});
-
-//https://codepen.io/natewiley/pen/HBrbL
