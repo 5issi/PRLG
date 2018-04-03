@@ -82,6 +82,10 @@ Router.configure({
 
 $.validator.setDefaults({
         rules: { 
+        	userName: {
+        		required: true,
+        		minlength: 4
+        	},
             email: {
             	required: true,
                 email: true
@@ -92,9 +96,13 @@ $.validator.setDefaults({
             }
         },
         messages: {
+        	userName: {
+        		required: "Bitte geben Sie einen Praxisnamen ein.",
+        		minlength: "Ihr Praxisname sollte aus mindestens 4 Zeichen bestehen."
+        	},
             email: {
                 required: "Bitte geben Sie hier Ihre Mailadresse an.",
-                email: "Dies ist keine gueltige Mailadresse."
+                email: "Dies ist keine gültige Mailadresse."
             },
             password:{
             	required: "Ein Passwort ist notwendig.",
@@ -321,12 +329,37 @@ Template.login.onRendered(function(){
 Template.login.onDestroyed(function(){
 });
 
+Template.patients.onRendered(function(){
+	var validator = $('.patients').validate({
+		rules: {
+        	patientSurName: {
+        		required: true,
+        		minlength: 2
+        	},
+        	patientLastName: {
+        		required: true,
+        		minlength: 2
+        	},
+        	patientDiag: {
+        		required: true
+        	}
+		},
+		messages: {
+			patientSurName: {
+				required: "Bitte geben Sie einen Vornamen für Ihren Patienten ein."
+			}
+		}
+	});
+});
+
 Template.register.onRendered(function(){
     var validator = $('.register').validate({
         submitHandler: function(event){
+        	var userName = ('[name=userName').val();
             var email = $('[name=email]').val();
             var password = $('[name=password]').val();
             Accounts.createUser({
+            	userName: userName,
                 email: email,
                 password: password
             }, function(error){
@@ -340,7 +373,7 @@ Template.register.onRendered(function(){
                     Router.go("home");
                 }
             });
-        }    
+        }
     });
 });
 /*...............................................eventuell bei mehr Forms default anlegen

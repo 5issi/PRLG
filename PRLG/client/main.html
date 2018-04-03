@@ -2,7 +2,57 @@
 
 <template name="home">
     {{#if currentUser}}
-        <p>Willkommen!</p>
+        <h1>Dashboard</h1>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col"></th>
+              <th scope="col"></th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row"></th>
+              <td>
+                <figure class="figure">
+                    <a href="{{pathFor route='patients'}}">
+                    <img src="patient.png" class="rounded float-right" height="80" width="80">  
+                    <figcaption class="figure-caption"> Patientenliste </figcaption>
+                    </a>
+                </figure>        
+              </td>
+              <td>
+                <figure class="figure">
+                    <a href="{{pathFor route='materials'}}">
+                    <img src="spiele.png" class="rounded float-right" height="80" width="80">  
+                    <figcaption class="figure-caption"> Material </figcaption>
+                    </a>
+                </figure>        
+              </td>
+              <td>
+                <figure class="figure">
+                    <img src="literatur.png" class="rounded float-right" height="80" width="80">  
+                    <figcaption class="figure-caption"> Patientenliste </figcaption>
+                </figure>        
+              </td>
+            </tr>
+            <tr>
+              <th scope="row"></th>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <th scope="row"></th>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+        
     {{else}}
         <p>Willkommen bei Prolog. Registrieren Sie sich jetzt oder loggen Sie sich ein, wenn sie bereits einen Account haben.</p>
     {{/if}}
@@ -46,9 +96,9 @@
             <form>
                 <div class="form-group">
                 Neuer Patient:  
-                    <input type="text" class="form-control" placeholder="Vorname des Patienten" name="patientSurName">
-                    <input type="text" class="form-control" placeholder="Nachname des Patienten" name="patientLastName">
-                    <input type="text" class="form-control" placeholder="Diagnose des Patienten" name="patientDiag">
+                    <input type="text" class="form-control" placeholder="Vorname des Patienten" minlength="2" name="patientSurName" required>
+                    <input type="text" class="form-control" placeholder="Nachname des Patienten" name="patientLastName" required>
+                    <input type="text" class="form-control" placeholder="Diagnose des Patienten" name="patientDiag" required>
                     <input type="number" class="form-control" placeholder="Alter des Patienten" name="patientAge">
                 </div>
                 <div class="form-group">
@@ -93,9 +143,9 @@
         <form>
             <div class="form-group">
             Therapeut(in) hinzufuegen: 
-            <input type="text" class="form-control" placeholder="Anrede" name="anrede">
-            <input type="text" class="form-control" placeholder="Vorname des Therapeuten" name="therapistSurName">
-            <input type="text" class="form-control" placeholder="Nachname des Therapeuten" name="therapistLastName">
+            <input type="text" class="form-control" placeholder="Anrede" name="anrede" required>
+            <input type="text" class="form-control" placeholder="Vorname des Therapeuten" name="therapistSurName" required>
+            <input type="text" class="form-control" placeholder="Nachname des Therapeuten" minlength="4" name="therapistLastName" required>
             </div>
             <div class="form-group">
                 <input type="submit" class="btn btn-success btn-lg btn-block" value="hinzufügen">
@@ -216,7 +266,7 @@
         <div class="col-xs-12">
             <form class="register">
                 <div class="form-group">
-        <p>Name der Praxis: <input type="text" class="form-control" name="userName" required></p>
+        <p>Name der Praxis: <input type="text" class="form-control" minlength="4" name="userName" required ></p>
         <p>Email: <input type="email" class="form-control" name="email" required></p>
         <p>Passwort: <input type="password" class="form-control" name="password" required></p>
         <p><input type="submit" class="btn btn-success btn-lg btn-block" value="Registrieren"></p>
