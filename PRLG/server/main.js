@@ -4,6 +4,23 @@ Meteor.startup(() => {
   // code to run on server at startup
 });
 
+Meteor.publish('patients', function(){
+    var currentUser = this.userId;
+    return Patientlist.find({ createdBy: currentUser });
+});
+
+Meteor.publish('therapists', function(){
+    var currentUser = this.userId;
+    return Therapists.find({ createdBy: currentUser });
+});
+
+Meteor.publish('materials', function(){
+    //var currentUser = this.userId;
+    return Materials.find({});
+});
+
+
+
 Meteor.methods({
 	insertPatient(patientSurName, patientLastName, diagnosis, age, patientGender, createdBy, createdAt){
 		Patientlist.insert({
@@ -34,6 +51,7 @@ Meteor.methods({
 			typ: typ
 		});
 	},
+
 	insertBook(bookName, partOf, category, authorName, typ){
 		Books.insert({
 			bookName: bookName, 
@@ -65,4 +83,4 @@ Meteor.publish('books', function(){
     return Books.find({});
 });
 
-//https://codepen.io/natewiley/pen/HBrbL
+
