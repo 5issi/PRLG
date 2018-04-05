@@ -3,6 +3,7 @@
 <template name="home">
     {{#if currentUser}}
         <h1>Dashboard</h1>
+
         <table class="table">
           <thead>
             <tr>
@@ -16,17 +17,17 @@
             <tr>
               <th scope="row"></th>
               <td>
-                <figure class="figure">
-                    <a href="{{pathFor route='patients'}}">
-                    <img src="patient.png" class="rounded float-right" height="80" width="80">  
-                    <figcaption class="figure-caption"> Patientenliste </figcaption>
-                    </a>
-                </figure>        
+                    <figure class="figure">
+                        <a href="{{pathFor route='patients'}}">
+                        <img src="patient.png" class="rounded float-right" height="80" width="80">  
+                        <figcaption class="figure-caption"> Patientenliste </figcaption>
+                        </a>
+                    </figure>
               </td>
               <td>
                 <figure class="figure">
                     <a href="{{pathFor route='materials'}}">
-                    <img src="spiele.png" class="rounded float-right" height="80" width="80">  
+                    <img src="spiel.png" class="rounded float-right" height="80" width="80">  
                     <figcaption class="figure-caption"> Material </figcaption>
                     </a>
                 </figure>        
@@ -47,9 +48,9 @@
               <td></td>
               <td></td>
               <td></td>
-              <td>
+              <td> <!-- TODO: FIX LOGOUT LINK -->
                 <figure class="figure">
-                    <a href="{{pathFor route='books'}}">
+                    <a href="#" class="logout">
                     <img src="logout.png" class="rounded float-right" height="80" width="80">  
                     <figcaption class="figure-caption"> Beenden </figcaption>
                     </a>

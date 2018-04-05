@@ -4,20 +4,6 @@ Meteor.startup(() => {
   // code to run on server at startup
 });
 
-Meteor.publish('patients', function(){
-    var currentUser = this.userId;
-    return Patientlist.find({ createdBy: currentUser });
-});
-
-Meteor.publish('therapists', function(){
-    var currentUser = this.userId;
-    return Therapists.find({ createdBy: currentUser });
-});
-
-Meteor.publish('materials', function(){
-    //var currentUser = this.userId;
-    return Materials.find({});
-});
 
 
 
