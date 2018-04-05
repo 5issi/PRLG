@@ -68,6 +68,52 @@ Router.route('/materials/:_id', {
     }
 });
 
+Router.route('/books', {
+	name: 'books',
+    template: 'books',
+    onBeforeAction: function(){
+        var currentUser = Meteor.userId();
+        if(currentUser){
+            this.next();
+        } else {
+            this.render("login");
+        }
+    },
+    waitOn: function(){ //subscriptions: function(){
+    	return Meteor.subscribe('books');
+    }
+});
+
+Router.route('/books/:_id', {
+	name: 'bookPage',
+    template: 'bookPage',
+    data: function(){
+        var currentBook = this.params._id;
+        return Books.findOne({ _id: currentBook });
+    },
+    subscriptions: function(){ //subscriptions: function(){
+    	return Meteor.subscribe('books');
+    }
+});
+
+Router.route('/patients/:_id', {
+	name: 'patientPage',
+    template: 'patientPage',
+    data: function(){
+        var currentPatient = this.params._id;
+        return Patientlist.findOne({ _id: currentPatient });
+    },
+    subscriptions: function(){ //subscriptions: function(){
+    	return Meteor.subscribe('patients');
+    }
+});
+/*
+Router.route('/calendar', {
+	name: 'calendar',
+	template: 'events'
+}); */
+
+
 Router.route('/', {
 	name: 'home',
     template: 'home'
@@ -85,6 +131,17 @@ $.validator.setDefaults({
         	userName: {
         		required: true,
         		minlength: 4
+        	},
+        	patientSurName:{
+        		required: true,
+        		minlength: 2
+        	},
+        	patientLastName: {
+        		required: true,
+        		minlength: 2
+        	},
+        	patientDiag: {
+        		required: true
         	},
             email: {
             	required: true,
@@ -134,27 +191,32 @@ Template.patients.events({/*
 			if ( error ){ console.log( error );			}
 		});
 	}*/	
+
 	'submit form': function(event){
 	    event.preventDefault();
 	    var patientSurName = $('[name="patientSurName"]').val();
 	    var patientLastName = $('[name="patientLastName"]').val();
 	    var patientDiag = $('[name="patientDiag"]').val();
-	    var patientAge = $('[date="patientAge"]').val();
+	    var patientAge = $('[name="patientAge"]').val();
+	    var patientGender = parseInt($('[name="patientGender"]').val());
     	var currentUser = Meteor.userId();
 		Meteor.call('insertPatient', 
 					patientSurName, 
 					patientLastName,
 					patientDiag, 
 					patientAge, 
+					patientGender,
 					currentUser,
 					new Date(), 
 					( error ) => {
-			if ( error ){ console.log( error );			}
+			if ( error ){ console.log( error );	}
 		});
     $('[name="patientSurName"]').val('');
     $('[name="patientLastName"]').val('');
     $('[name="patientDiag"]').val('');
     $('[name="patientAge"]').val('');
+    $('[name="patientGender"]').val('');
+
 	}
 });
 
@@ -256,9 +318,42 @@ Template.phonoFit.events({
 	'submit form': function(event){
 	    event.preventDefault();
 	    var cardInput = $('[name="cardInput"]').val();
-    	Meteor.call('displayMemory');
+    	//Meteor.call('displayMemory');
     }
 });
+
+//........................................................................BOOKS
+
+Template.books.helpers({
+    'book': function(){
+        return Books.find({}, {sort: {bookName: 1}});
+    }
+});
+
+
+Template.addBook.events({
+	'submit form': function(event){
+	    event.preventDefault();
+	    var bookName = $('[name="bookName"]').val();
+	    var partOf = $('[name="partOf"]').val();
+	    var category = $('[name="category"]').val();
+	    var authorName = $('[name="authorName"]').val();
+	    var typ = $('[name="typ"]').val();
+    	var currentUser = Meteor.userId();
+	    Meteor.call('insertBook', bookName, partOf, category, authorName, typ, ( error ) => {
+			if ( error ){ console.log( error );	}
+		});
+    $('[name="bookName"]').val('');
+    $('[name="partOf"]').val('');
+    $('[name="category"]').val('');
+    $('[name="authorName"]').val('');
+    $('[name="typ"]').val('');
+	}
+});
+
+Template.bookItem.events({
+});
+
 //........................................................................REGISTER
 Template.register.events({
     'submit form': function(event){
@@ -284,7 +379,7 @@ Template.navigation.events({
 	'click .logout': function(event){
 		event.preventDefault();
 		Meteor.logout();
-		Rounter.go('login');  // hide patients/ therapists??
+		Rounter.go('login'); 
 	}
 });
 
@@ -331,24 +426,6 @@ Template.login.onDestroyed(function(){
 
 Template.patients.onRendered(function(){
 	var validator = $('.patients').validate({
-		rules: {
-        	patientSurName: {
-        		required: true,
-        		minlength: 2
-        	},
-        	patientLastName: {
-        		required: true,
-        		minlength: 2
-        	},
-        	patientDiag: {
-        		required: true
-        	}
-		},
-		messages: {
-			patientSurName: {
-				required: "Bitte geben Sie einen Vornamen für Ihren Patienten ein."
-			}
-		}
 	});
 });
 
@@ -376,5 +453,34 @@ Template.register.onRendered(function(){
         }
     });
 });
-/*...............................................eventuell bei mehr Forms default anlegen
+
+
+
+
+/*.
+Template.events.onCreated( () => {
+  let template = Template.instance();
+  template.subscribe( 'events' );
+});
+
+Template.events.onRendered( () => {
+  $( '#events-calendar' ).fullCalendar({
+    events( start, end, timezone, callback ) {
+      let data = Events.find().fetch().map( ( event ) => {
+        event.editable = !isPast( event.start );
+        return event;
+      });
+
+      if ( data ) {
+        callback( data );
+      }
+    }
+  });
+});
+
+let isPast = ( date ) => {
+  let today = moment().format();
+  return moment( today ).isAfter( date );
+};
+..............................................eventuell bei mehr Forms default anlegen
 */

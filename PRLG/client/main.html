@@ -33,9 +33,13 @@
               </td>
               <td>
                 <figure class="figure">
+                    <a href="{{pathFor route='books'}}">
                     <img src="literatur.png" class="rounded float-right" height="80" width="80">  
-                    <figcaption class="figure-caption"> Patientenliste </figcaption>
+                    <figcaption class="figure-caption"> Literatur </figcaption>
+                    </a>
                 </figure>        
+              </td>
+              <td>
               </td>
             </tr>
             <tr>
@@ -43,6 +47,14 @@
               <td></td>
               <td></td>
               <td></td>
+              <td>
+                <figure class="figure">
+                    <a href="{{pathFor route='books'}}">
+                    <img src="logout.png" class="rounded float-right" height="80" width="80">  
+                    <figcaption class="figure-caption"> Beenden </figcaption>
+                    </a>
+                </figure>                   
+              </td>
             </tr>
             <tr>
               <th scope="row"></th>
@@ -53,9 +65,12 @@
           </tbody>
         </table>
         
+        
+
     {{else}}
-        <p>Willkommen bei Prolog. Registrieren Sie sich jetzt oder loggen Sie sich ein, wenn sie bereits einen Account haben.</p>
+        <h2>Willkommen bei Prolog. Registrieren Sie sich jetzt oder loggen Sie sich ein, wenn sie bereits einen Account haben.</h2>
     {{/if}}
+
 </template>
 
 <template name="main">
@@ -101,6 +116,17 @@
                     <input type="text" class="form-control" placeholder="Diagnose des Patienten" name="patientDiag" required>
                     <input type="number" class="form-control" placeholder="Alter des Patienten" name="patientAge">
                 </div>
+                <div class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Dropdown button
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#">Action</a> <br>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                  </div>
+                </div>
+
                 <div class="form-group">
                     <input type="submit" class="btn btn-success btn-lg btn-block" value="hinzufügen">
                 </div>
@@ -111,12 +137,33 @@
 
 <template name="patientItem">
     <li class="list-group-item"> 
-        {{patientSurName}} {{patientLastName}}: {{diagnosis}} {{patientAge}} <!--TODO: fix age--> 
+        <a href="{{pathFor route='patientPage'}}">{{patientSurName}} {{patientLastName}}:</a> {{diagnosis}} {{patientAge}} <!--TODO: fix age--> 
         <a href="#" class="delete-patient btn btn-danger btn btn-primary btn-xs">x</a>
     </li>
 </template>
 
 <template name="addPatient"> 
+</template>
+
+
+<template name="patientPage">
+    <h2>{{patientSurName}} {{patientLastName}}</h2>
+    <h3>Diagnose: {{diagnosis}}</h3>
+</template>
+
+<template name="phonoFit">
+    <div class="row">
+        <div class="col-xs-12">
+            <form>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Mit wie vielen Karten möchtest du spielen?" name="cardInput">
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-default btn-lg btn-block" value="Spielen">
+                </div>
+            </form> 
+        </div>
+    </div>
 </template>
 
 
@@ -166,6 +213,59 @@
 </template>
 
 <!--..........................................................MATERIALS-->
+<template name="addBook">
+    <div class="row">
+        <div class="col-xs-12">
+            <form>
+                <div class="form-group">
+                    Buch hinzufügen: 
+                    <input type="text" class="form-control" placeholder="Name des Buchs" name="bookName">
+                    <input type="text" class="form-control" placeholder="Reihe" name="partOf">
+                    <input type="text" class="form-control" placeholder="Themenbereich" name="category">
+                    <input type="text" class="form-control" placeholder="Name des Autors" name="authorName">
+                    <input type="text" class="form-control" placeholder="Typ" name="typ">
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-success btn-lg btn-block" value="hinzufügen">
+                </div>
+            </form> 
+        </div>
+    </div>
+</template>
+
+<template name="books">
+    <div class="row">
+        <div class="col-xs-12">
+            <h2>Literatur</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <ul class="list-group">
+                {{#each book}}
+                    {{> bookItem }}
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+    
+    {{> addBook }}
+</template>
+
+<template name="bookItem">
+    <li class="list-group-item">         
+        <a href="{{pathFor route='bookPage'}}">
+        <img src="literatur.png" class="rounded float-right" height="60" width="60">  
+        <strong>{{bookName}} </strong><br> <small> {{partOf}}, {{authorName}}, {{category}} </small></a>
+    </li>
+</template>
+
+<template name="bookPage">   
+    <h2>{{bookName}}</h2>
+</template>
+
+<!----------------------------------------------------------------------LITERATUR -->
 <template name="addMaterial">
     <div class="row">
         <div class="col-xs-12">
@@ -208,6 +308,7 @@
 
 <template name="materialItem">
     <li class="list-group-item"> 
+        <img src="spiel.png" class="rounded float-right" height="60" width="60">  
         <a href="{{pathFor route='materialPage'}}"><strong>{{materialName}} </strong><br> <small> {{partOf}}, {{creator}}, {{category}} </small></a>
     </li>
 </template>
@@ -219,20 +320,6 @@
     {{/if}}
 </template>
 
-<template name="phonoFit">
-    <div class="row">
-        <div class="col-xs-12">
-            <form>
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Mit wie vielen Karten möchtest du spielen?" name="cardInput">
-                </div>
-                <div class="form-group">
-                    <input type="submit" class="btn btn-default btn-lg btn-block" value="Spielen">
-                </div>
-            </form> 
-        </div>
-    </div>
-</template>
 <!--...........................................................ROUTES-->
 
 <template name="login">
@@ -249,6 +336,7 @@
                     <p>eMail: <input type="email"  class="form-control" name="email" required></p>
                     <p>Passwort: <input type="password"  class="form-control" name="password" required></p>
                     <p><input type="submit" class="btn btn-success btn-lg btn-block" value="Login"></p>
+                    Passwort vergessen?
                 </div>
             </form>
         </div>
@@ -286,6 +374,7 @@
         <li><a href="{{pathFor route='patients'}}">Patienten</a></li>
         <li><a href="{{pathFor route='therapists'}}">Therapeuten</a></li>
         <li><a href="{{pathFor route='materials'}}">Material</a></li>
+        <li><a href="{{pathFor route='books'}}">Literatur</a></li>
         {{else}}
         <li><a href="{{pathFor route='login'}}">Login</a></li>
         <li><a href="{{pathFor route='register'}}">Registrieren</a></li>

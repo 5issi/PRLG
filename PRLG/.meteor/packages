@@ -23,3 +23,7 @@ accounts-password
 accounts-ui
 themeteorchef:jquery-validation
 twbs:bootstrap
+fullcalendar:fullcalendar
+momentjs:moment
+aldeed:simple-schema
+mrt:bootstrap-select
