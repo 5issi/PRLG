@@ -22,8 +22,9 @@ iron:router
 accounts-password
 accounts-ui
 themeteorchef:jquery-validation
-twbs:bootstrap
+twbs:bootstrap@=4.0.0-alpha.2
 fullcalendar:fullcalendar
 momentjs:moment
 aldeed:simple-schema
 mrt:bootstrap-select
+jquery
