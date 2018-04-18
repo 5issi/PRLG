@@ -192,6 +192,12 @@ Template.patients.events({/*
 		});
 	}*/	
 
+
+	'click .dropdown-toggle': function (e) {
+    e.preventDefault();
+    $(e.target).find('.dropdown-menu').toggle();
+    },
+    
 	'submit form': function(event){
 	    event.preventDefault();
 	    var patientSurName = $('[name="patientSurName"]').val();
