@@ -442,18 +442,16 @@ Template.patients.onRendered(function(){
 Template.register.onRendered(function(){
     var validator = $('.register').validate({
         submitHandler: function(event){
-        	var userName = ('[name=userName').val();
             var email = $('[name=email]').val();
             var password = $('[name=password]').val();
             Accounts.createUser({
-            	userName: userName,
                 email: email,
                 password: password
             }, function(error){
                 if(error){
 				    if(error.reason == "Email already exists."){
 				        validator.showErrors({
-				            email: "Diese Mailadresse gehoert bereits zu einem Konto."   
+				            email: "Diese Mailadresse gehört bereits zu einem Konto."   
 				        });
 				    }
                 } else {
