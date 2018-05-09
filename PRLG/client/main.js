@@ -21,6 +21,7 @@ Router.route('/patients', {
     },
     waitOn: function(){
     	return Meteor.subscribe('patients');
+        return Meteor.subscribe('therapists');
     }
 });
 
@@ -179,10 +180,11 @@ Template.patients.helpers({/*
 		}
 		else { console.log("Ups");}
 	},*/
+    
 	'patient': function(){
     	var currentUser = Meteor.userId();
 		return Patientlist.find({ createdBy: currentUser }, {sort: {name: 1}});
-	}
+	},
 });
 
 Template.patients.events({/*
@@ -207,8 +209,9 @@ Template.patients.events({/*
 	    var patientSurName = $('[name="patientSurName"]').val();
 	    var patientLastName = $('[name="patientLastName"]').val();
 	    var patientDiag = $('[name="patientDiag"]').val();
-	    var patientAge = $('[name="patientAge"]').val();
-	    var patientGender = parseInt($('[name="patientGender"]').val());
+	    var patientAge = $('[name="patientAge"]').val().toString();
+        console.log(patientAge);
+	    var patientGender = $('[name="patientGender"]').val();
     	var currentUser = Meteor.userId();
 		Meteor.call('insertPatient', 
 					patientSurName, 
@@ -225,7 +228,6 @@ Template.patients.events({/*
     $('[name="patientLastName"]').val('');
     $('[name="patientDiag"]').val('');
     $('[name="patientAge"]').val('');
-    $('[name="patientGender"]').val('');
 
 	}
 });

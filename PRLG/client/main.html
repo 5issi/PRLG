@@ -112,7 +112,7 @@
             </ul>
         </div>
     </div>
-
+    <br>
     <div class="row">
         <div class="col-xs-8">
             <form>
@@ -122,7 +122,9 @@
                     <input type="text" class="form-control" placeholder="Nachname des Patienten" name="patientLastName" required>
                     <input type="text" class="form-control" placeholder="Diagnose des Patienten" name="patientDiag" required>
                     <input type="number" class="form-control" placeholder="Alter des Patienten" name="patientAge">
+
                 </div>
+                <!--
                 <div class="dropdown">
                     <button class="btn btn-default dropdown-toggle" type="button" id="mt-command-dd" data-toggle="dropdown">Command
                         <span class="caret"></span>
@@ -147,7 +149,7 @@
                          </li>
                     </ul>
                 </div>
-                 <!--
+                 
                 <div class="dropdown">
                   <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Geschlecht
@@ -160,13 +162,30 @@
                     <a class="dropdown-item" href="#">keine Angabe</a>
                   </div>
                 </div>
-                -->
-                <div class="form-group">
+                
+                <div class="ui dropdown">
+                    <input type="hidden" name="gender">
+                    <i class="dropdown icon"></i>
+                    <div class="default text">Gender</div>
+                    <div class="menu">
+                        <div class="item" data-value="male">Male</div>
+                        <div class="item" data-value="female">Female</div>
+                    </div>
+                </div>
+-->
+                <select class="form-control" name="patientGender">
+                    <option>weiblich</option>
+                    <option>männlich</option>
+                    <option>k.A.</option>
+                </select>
+                <br>                <div class="form-group">
                     <input type="submit" class="btn btn-success btn-lg btn-block" value="hinzufügen">
                 </div>
             </form> 
         </div>
     </div>
+
+
 </template>
 
 <template name="patientItem">
@@ -221,11 +240,12 @@
             </ul>
         </div>
     </div>
+    <br>
     <div class="row">
         <div class="col-xs-12">
         <form>
             <div class="form-group">
-            Therapeut(in) hinzufuegen: 
+            Therapeut(in) hinzufügen: 
             <input type="text" class="form-control" placeholder="Anrede" name="anrede" required>
             <input type="text" class="form-control" placeholder="Vorname des Therapeuten" name="therapistSurName" required>
             <input type="text" class="form-control" placeholder="Nachname des Therapeuten" minlength="4" name="therapistLastName" required>
@@ -285,7 +305,7 @@
             </ul>
         </div>
     </div>
-    
+    <br>
     {{> addBook }}
 </template>
 
@@ -312,7 +332,11 @@
                     <input type="text" class="form-control" placeholder="Reihe" name="partOf">
                     <input type="text" class="form-control" placeholder="Förderbereich" name="category">
                     <input type="text" class="form-control" placeholder="Name des Autors" name="creatorName">
-                    <input type="text" class="form-control" placeholder="Typ" name="typ">
+                    <select class="form-control" name="typ">
+                        <option>Spiel</option>
+                        <option>Arbeitsordner</option>
+                        <option>Kopiervorlage</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <input type="submit" class="btn btn-success btn-lg btn-block" value="hinzufügen">
@@ -328,7 +352,6 @@
             <h2>Therapiematerial</h2>
         </div>
     </div>
-
     <div class="row">
         <div class="col-xs-12">
             <ul class="list-group">
@@ -338,7 +361,7 @@
             </ul>
         </div>
     </div>
-    
+    <br>
     {{> addMaterial }}
 </template>
 
