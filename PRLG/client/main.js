@@ -37,6 +37,7 @@ Router.route('/therapists', {
         }
     },
     waitOn: function(){ //subscriptions: function(){
+    	return Meteor.subscribe('patients');
     	return Meteor.subscribe('therapists');
     }
 });
@@ -228,8 +229,8 @@ Template.patients.events({/*
     $('[name="patientLastName"]').val('');
     $('[name="patientDiag"]').val('');
     $('[name="patientAge"]').val('');
-
 	}
+
 });
 
 Template.patientItem.events({
