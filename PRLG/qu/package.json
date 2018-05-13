@@ -1,5 +1,5 @@
 {
-  "name": "quizzz",
+  "name": "qu",
   "private": true,
   "scripts": {
     "start": "meteor run"
