@@ -4,9 +4,21 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import './main.html';
 
 ///////////////////////////////////////////////////ROUTES
-Router.route('/register');
+Router.route('/register', {
+    name: 'register',
+    template: 'register',
+    onBeforeAction: function(){
+        this.render('register');
+    }
+});
 
-Router.route('/login');
+Router.route('/login', {
+    name: 'login',
+    template: 'login',
+    onBeforeAction: function(){
+        this.render('login');
+    }
+});
 
 Router.route('/patients', {
 	name: 'patients',
@@ -25,7 +37,27 @@ Router.route('/patients', {
     }
 });
 
-Router.route('/therapists', {
+Router.route('/questions', function () {
+    this.render('questions');
+},  {
+    name: 'questions',
+    template: 'questions',
+    onBeforeAction: function(){
+        var currentUser = Meteor.userId();
+        if(currentUser){
+            this.next();
+        } else {
+            this.render("login");
+        }
+    },
+    waitOn: function(){
+        return Meteor.subscribe('questions');
+    }
+});
+
+Router.route('/therapists', function () {
+    this.render('therapists');
+}, {
 	name: 'therapists',
     template: 'therapists',
     onBeforeAction: function(){
@@ -42,7 +74,9 @@ Router.route('/therapists', {
     }
 });
 
-Router.route('/materials', {
+Router.route('/materials', function () {
+    this.render('materials');
+},  {
 	name: 'materials',
     template: 'materials',
     onBeforeAction: function(){
@@ -58,7 +92,9 @@ Router.route('/materials', {
     }
 });
 
-Router.route('/materials/:_id', {
+Router.route('/materials/:_id', function () {
+    this.render('materialPage');
+},  {
 	name: 'materialPage',
     template: 'materialPage',
     data: function(){
@@ -70,7 +106,9 @@ Router.route('/materials/:_id', {
     }
 });
 
-Router.route('/books', {
+Router.route('/books', function () {
+    this.render('books');
+},  {
 	name: 'books',
     template: 'books',
     onBeforeAction: function(){
@@ -86,7 +124,9 @@ Router.route('/books', {
     }
 });
 
-Router.route('/books/:_id', {
+Router.route('/books/:_id', function () {
+    this.render('bookPage');
+},  {
 	name: 'bookPage',
     template: 'bookPage',
     data: function(){
@@ -98,7 +138,9 @@ Router.route('/books/:_id', {
     }
 });
 
-Router.route('/patients/:_id', {
+Router.route('/patients/:_id', function () {
+    this.render('patientPage');
+}, {
 	name: 'patientPage',
     template: 'patientPage',
     data: function(){
@@ -109,14 +151,11 @@ Router.route('/patients/:_id', {
     	return Meteor.subscribe('patients');
     }
 });
-/*
-Router.route('/calendar', {
-	name: 'calendar',
-	template: 'events'
-}); */
 
 
-Router.route('/', {
+Router.route('/', function () {
+    this.render('home');
+}, {
 	name: 'home',
     template: 'home'
 });
@@ -241,7 +280,48 @@ Template.patientItem.events({
 		if (confirm){ Patientlist.remove({ _id: documentId }); }
 	}
 });
+//.........................................................................QUESTIONS
 
+Template.questions.helpers({
+    'question': function(){
+        var currentUser = Meteor.userId();
+        return Questions.find({});
+    },
+});
+
+Template.questions.events({
+    'click .menuitem': function (event) {
+        $('#mt-command-dd').text(event.target.text);
+    },
+    'submit form': function(event){
+        event.preventDefault();
+        var questionText = $('[name="questionText"]').val();
+        var questionAnswer1 = $('[name="questionAnswer1"]').val();
+        var questionAnswer2 = $('[name="questionAnswer2"]').val();
+        var questionAnswer3 = $('[name="questionAnswer3"]').val();
+        var answers = [questionAnswer1, questionAnswer2, questionAnswer3];
+        Meteor.call('insertQuestion', 
+            questionText, 
+            answers,
+            questionAnswer3
+    );
+
+    $('[name="questionText"]').val('');
+    $('[name="questionAnswer1"]').val('');
+    $('[name="questionAnswer2"]').val('');
+    $('[name="questionAnswer3"]').val('');
+  }
+
+});
+
+Template.questionItem.events({
+    'click .delete-question': function(event){
+        event.preventDefault();
+        var documentId = this._id;
+        var confirm = window.confirm("Möchten Sie die Frage wirklich löschen?");
+        if (confirm){ Questions.remove({ _id: documentId }); }
+    }
+});
 
 //.........................................................................THERAPISTS
 Template.therapists.helpers({/*
@@ -392,7 +472,7 @@ Template.navigation.events({
 	'click .logout': function(event){
 		event.preventDefault();
 		Meteor.logout();
-		Rounter.go('login'); 
+		Router.go('login'); 
 	}
 });
 

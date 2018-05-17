@@ -7,6 +7,8 @@ Therapists = new Mongo.Collection('therapists');
 Books = new Mongo.Collection('books');
 
 Materials = new Mongo.Collection('materials'); 
+
+Questions = new Mongo.Collection('questions');
 /*
 Events = new Mongo.Collection( 'events' );
 

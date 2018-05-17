@@ -221,6 +221,68 @@
     </div>
 </template>
 
+<!--..........................................................QUESTIONS-->
+
+<template name="questions">
+    <div class="row">
+        <div class="col-xs-12">
+            <h2>..</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-8">
+            <ul class="list-group">
+            {{#each question}}
+                {{> questionItem }}<!-- <li>{{name}}: {{diagnosis}}</li> -->
+            {{/each}}
+            </ul>
+        </div>
+    </div>
+    <br>
+    
+    <div class="row">
+        <div class="col-xs-8">
+            <form>
+                <div class="form-group">
+                Neue Frage  
+                <input type="questionText" class="form-control" placeholder="Fragetext" name="questionText" required>
+                <input type="questionAnswer1" class="form-control" placeholder="Antworttext" name="questionAnswer1" required>
+                <input type="questionAnswer2" class="form-control" placeholder="Antworttext" name="questionAnswer2" required>
+                <input type="questionAnswer3" class="form-control" placeholder="Antworttext" name="questionAnswer3" required>
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-success btn-lg btn-block" value="hinzufügen">
+                </div>
+            </form> 
+        </div>
+    </div>
+
+</template>
+
+<template name="questionItem">
+    <li class="list-group-item"> 
+        {{questionText}} 
+        <a href="#" class="delete-question btn btn-danger btn btn-primary btn-xs">x</a>
+    </li>
+</template>
+
+
+<template name="phonoFit">
+    <div class="row">
+        <div class="col-xs-12">
+            <form>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Mit wie vielen Karten möchtest du spielen?" name="cardInput">
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-default btn-lg btn-block" value="Spielen">
+                </div>
+            </form> 
+        </div>
+    </div>
+</template>
+
 
 <!--..........................................................THERAPISTS-->
 
@@ -235,7 +297,7 @@
         <div class="col-xs-12">
             <ul class="list-group">
                 {{#each therapist}}
-                    {{> therapistItem }} <!-- <li>{{name}}: {{diagnosis}}</li> -->
+                    {{> therapistItem }} 
                 {{/each}}
             </ul>
         </div>
@@ -379,7 +441,7 @@
     {{/if}}
 </template>
 
-<!--...........................................................ROUTES-->
+
 
 <template name="login">
     <div class="row">
@@ -424,7 +486,7 @@
 </template>
 
 
-
+<!--...........................................................ROUTES-->
 <template name="navigation">
     <ul>
         <li><a href="{{pathFor route='home'}}">Home</a></li>
@@ -437,6 +499,7 @@
         {{else}}
         <li><a href="{{pathFor route='login'}}">Login</a></li>
         <li><a href="{{pathFor route='register'}}">Registrieren</a></li>
+        <li><a href="{{pathFor route='questions'}}">Fragen</a></li>
         {{/if}}
     </ul>
 </template>

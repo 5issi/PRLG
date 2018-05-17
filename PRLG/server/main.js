@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { Mongo } from 'meteor/mongo';
 
 Meteor.startup(() => {
   // code to run on server at startup
@@ -17,6 +18,13 @@ Meteor.methods({
 			patientGender: patientGender,
 			createdBy: createdBy,
 			createdAt: createdAt
+		});
+	},
+	insertQuestion(questionText, answers, correctAnswer){
+		Questions.insert({
+			questionText: questionText, 
+			answers: answers, 
+			correctAnswer: correctAnswer
 		});
 	},
 	insertTherapist(therapistSurName, therapistLastName, anrede, createdBy, createdAt){
@@ -52,6 +60,11 @@ Meteor.methods({
 Meteor.publish('patients', function(){
     var currentUser = this.userId;
     return Patientlist.find({ createdBy: currentUser });
+});
+
+Meteor.publish('questions', function(){
+    var currentUser = this.userId;
+    return Questions.find({});
 });
 
 Meteor.publish('therapists', function(){
