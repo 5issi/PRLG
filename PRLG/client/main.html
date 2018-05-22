@@ -77,7 +77,7 @@
     {{else}}
         <h2>Willkommen bei Prolog. Registrieren Sie sich jetzt oder loggen Sie sich ein, wenn sie bereits einen Account haben.</h2>
     {{/if}}
-
+    {{> questions}}
 </template>
 
 <template name="main">
@@ -125,55 +125,7 @@
                     <input type="number" class="form-control" placeholder="Alter des Patienten" name="patientAge">
 
                 </div>
-                <!--
-                <div class="dropdown">
-                    <button class="btn btn-default dropdown-toggle" type="button" id="mt-command-dd" data-toggle="dropdown">Command
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                         <li role="presentation">
-                            <a role="menuitem" tabindex="-1"
-                                id="config-request-command" href="#">Option 1</a>
-                         </li>
-                         <li role="presentation">
-                            <a role="menuitem" tabindex="-1" href="#">Option 2</a>
-                         </li>
-                         <li role="presentation">
-                           <a role="menuitem" tabindex="-1" href="#">Option 3</a>
-                         </li>
-                         <li role="presentation">
-                            <a role="menuitem" tabindex="-1" href="#">Option 4</a>
-                          </li>
-                         <li role="presentation" class="divider"></li>
-                         <li role="presentation">
-                            <a role="menuitem" tabindex="-1" href="#">Other</a>
-                         </li>
-                    </ul>
-                </div>
-                 
-                <div class="dropdown">
-                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Geschlecht
-                  </button>
-
-                 
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#">weiblich</a>
-                    <a class="dropdown-item" href="#">männlich</a>
-                    <a class="dropdown-item" href="#">keine Angabe</a>
-                  </div>
-                </div>
                 
-                <div class="ui dropdown">
-                    <input type="hidden" name="gender">
-                    <i class="dropdown icon"></i>
-                    <div class="default text">Gender</div>
-                    <div class="menu">
-                        <div class="item" data-value="male">Male</div>
-                        <div class="item" data-value="female">Female</div>
-                    </div>
-                </div>
--->
                 <select class="form-control" name="patientGender">
                     <option>weiblich</option>
                     <option>männlich</option>
@@ -206,20 +158,7 @@
     <h3>Diagnose: {{diagnosis}}</h3>
 </template>
 
-<template name="phonoFit">
-    <div class="row">
-        <div class="col-xs-12">
-            <form>
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Mit wie vielen Karten möchtest du spielen?" name="cardInput">
-                </div>
-                <div class="form-group">
-                    <input type="submit" class="btn btn-default btn-lg btn-block" value="Spielen">
-                </div>
-            </form> 
-        </div>
-    </div>
-</template>
+
 
 <!--..........................................................QUESTIONS-->
 
@@ -262,8 +201,7 @@
 
 <template name="questionItem">
     <li class="list-group-item"> 
-        {{questionText}} 
-        <a href="#" class="delete-question btn btn-danger btn btn-primary btn-xs">x</a>
+        {{questionText}} {{questionAnswer1}} {{questionAnswer2}} {{questionAnswer3}}
     </li>
 </template>
 

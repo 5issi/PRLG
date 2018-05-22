@@ -295,17 +295,19 @@ Template.questions.events({
     },
     'submit form': function(event){
         event.preventDefault();
+        Meteor.subscribe('questions');
         var questionText = $('[name="questionText"]').val();
         var questionAnswer1 = $('[name="questionAnswer1"]').val();
         var questionAnswer2 = $('[name="questionAnswer2"]').val();
         var questionAnswer3 = $('[name="questionAnswer3"]').val();
         var answers = [questionAnswer1, questionAnswer2, questionAnswer3];
+        console.log("test");
         Meteor.call('insertQuestion', 
             questionText, 
             answers,
             questionAnswer3
     );
-
+       console.log("test2");
     $('[name="questionText"]').val('');
     $('[name="questionAnswer1"]').val('');
     $('[name="questionAnswer2"]').val('');
