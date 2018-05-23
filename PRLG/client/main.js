@@ -157,7 +157,12 @@ Router.route('/', function () {
     this.render('home');
 }, {
 	name: 'home',
-    template: 'home'
+    template: 'home',
+    data: function(){
+    },
+    subscriptions: function(){ //subscriptions: function(){
+    	return Meteor.subscribe('questions');
+    }
 });
 
 Router.configure({
@@ -304,7 +309,8 @@ Template.questions.events({
         console.log("test");
         Meteor.call('insertQuestion', 
             questionText, 
-            answers,
+            questionAnswer1, 
+            questionAnswer2, 
             questionAnswer3
     );
        console.log("test2");

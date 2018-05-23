@@ -1,0 +1,64 @@
+<head>
+  <title>KRAN</title>
+</head>
+
+<body>
+  <h1>KRAN</h1>
+
+  {{> statements}}
+</body>
+
+<template name="statements">
+    <div class="row">
+        <div class="col-xs-12">
+            <h2>Welche Aussage stimmt?</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-8">
+            <ul class="list-group">
+            {{#each statement}}
+                {{> statementItem}}
+            {{/each}}
+            </ul>
+        </div>
+    </div>
+    <br>
+    
+    <div class="row">
+        <div class="col-xs-8">
+            <form>
+                <div class="form-group">
+                Neu:  
+                    <input type="text" class="form-control" minlength="2" name="stateMent" required>
+                <select class="form-control" name="correct">
+                    <option>ja</option>
+                    <option>nein</option>
+                </select>
+                <br>                
+                <div class="form-group">
+                    <input type="submit" class="btn btn-success btn-lg btn-block" value="hinzufügen">
+                </div>
+              </div>
+            </form> 
+        </div>
+    </div>
+
+</template>
+
+<template name="statementItem">
+    <li class="list-group-item"> 
+      
+       {{statement}}
+        
+        <input type="button" name ="ja" id="ja" value="ja">
+        <button> nein </button>
+    </li>
+</template>
+
+
+<template name="statementPage">
+    {{statement}} <!--</a> <button> ja </button> <button> nein </button>-->
+</template>
+

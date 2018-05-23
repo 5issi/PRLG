@@ -20,10 +20,12 @@ Meteor.methods({
 			createdAt: createdAt
 		});
 	},
-	insertQuestion(questionText, answers, correctAnswer){
+	insertQuestion(questionText, answer1, answer2, answer3, correctAnswer){
 		Questions.insert({
 			questionText: questionText, 
-			answers: answers, 
+			answer1: answer1,
+			answer2: answer2,
+			answer3: answer3,
 			correctAnswer: correctAnswer
 		});
 	},
