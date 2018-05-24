@@ -6,6 +6,8 @@
   <h1>KRAN</h1>
 
   {{> statements}}
+  {{> entscheidenSie}}
+  {{> inMeinemHaus}}
 </body>
 
 <template name="statements">
@@ -19,7 +21,13 @@
         <div class="col-xs-8">
             <ul class="list-group">
             {{#each statement}}
-                {{> statementItem}}
+                {{#if checkIfCorrect}}
+                    {{> statementItem}}
+                {{else}}
+                    {{#if checkIfIncorrect}}
+                        {{correction}}
+                    {{/if}}
+                {{/if}}
             {{/each}}
             </ul>
         </div>
@@ -30,11 +38,19 @@
         <div class="col-xs-8">
             <form>
                 <div class="form-group">
-                Neu:  
+                Neu: 
+                <select class="form-control" name="taskType">
+                    <option>Welche Aussage stimmt?</option>
+                    <option>Bitte entscheiden Sie.</option>
+                    <option>in meinem Haus</option>
+                </select> 
                     <input type="text" class="form-control" minlength="2" name="stateMent" required>
+                    <input type="text" class="form-control" minlength="2" name="correction">
                 <select class="form-control" name="correct">
                     <option>ja</option>
                     <option>nein</option>
+                    <option>Pflanze</option>
+                    <option>Kleidung</option>
                 </select>
                 <br>                
                 <div class="form-group">
@@ -48,15 +64,39 @@
 </template>
 
 <template name="statementItem">
+    {{#if taskType1}}
     <li class="list-group-item"> 
       
-       {{statement}}
+       {{statementName}}
         
-        <input type="button" name ="ja" id="ja" value="ja">
-        <button> nein </button>
+        <input type="button" class="ja" name ="ja" id="ja" value="ja">
+        <input type="button" class="nein" name ="nein" id="nein" value="nein">
+
+    </li>
+    {{/if}}
+</template>
+
+<template name="inMeinemHaus">
+    <li class="list-group-item"> 
+      
+       {{statementName}}
+        
+        <input type="button" class="ja" name ="ja" id="ja" value="ja">
+        <input type="button" class="nein" name ="nein" id="nein" value="nein">
+
     </li>
 </template>
 
+<template name="entscheidenSie">
+    <li class="list-group-item"> 
+      
+       {{statementName}}
+        
+        <input type="button" class="pflanze" name ="pflanze" id="pflanze" value="Pflanze">
+        <input type="button" class="kleidung" name ="kleidung" id="kleidung" value="Kleidung">
+
+    </li>
+</template>
 
 <template name="statementPage">
     {{statement}} <!--</a> <button> ja </button> <button> nein </button>-->

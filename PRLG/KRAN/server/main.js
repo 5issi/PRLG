@@ -5,14 +5,18 @@ Meteor.startup(() => {
 });
 
 Meteor.methods({
-	insertStatement(statementName, correct, chosen){
+	insertStatement(taskType, statementName, correct, chosen, correction){
 		Statementlist.insert({
+			taskType: taskType,
 			statementName: statementName,
 			correct: correct,
-			chosen: chosen
+			chosen: chosen,
+			correction: correction
 		});
 	}
 });
+
+
 
 Meteor.publish('statements', function(){
     return Statementlist.find({});
