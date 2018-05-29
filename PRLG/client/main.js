@@ -455,6 +455,11 @@ Template.addBook.events({
 Template.bookItem.events({
 });
 
+Template.clicking.events({
+	'on-click': function(){
+		console.log("hi");
+	}
+})
 //........................................................................REGISTER
 Template.register.events({
     'submit form': function(event){

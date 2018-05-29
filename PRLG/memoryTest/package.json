@@ -1,5 +1,5 @@
 {
-  "name": "KRAN",
+  "name": "memoryTest",
   "private": true,
   "scripts": {
     "start": "meteor run"
