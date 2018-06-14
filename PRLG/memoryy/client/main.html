@@ -35,8 +35,15 @@
   </table>
   {{testImg}}
 
-  {{#if clicked2}}
-  test1
-  {{else}}test2
-  {{/if}}
+<div>
+  
+            {{#each card}}
+                {{cardName}}
+            {{/each}}
+
+</div>
+  <div ng-repeat="card in Cards ">
+      <span>{{card.cardName}}</span>
+      <img src="card.imageUrl " alt="Italian Trulli">
+</div>
 </template>

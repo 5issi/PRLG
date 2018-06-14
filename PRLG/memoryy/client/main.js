@@ -3,18 +3,19 @@ import { ReactiveVar } from 'meteor/reactive-var';
 
 import { Mongo } from 'meteor/mongo';
 import './main.html';
+import {Cards} from '/lib/collections.js'
 //var cardArray = new Array();
 var cardArray = [
 
-{ label: 'firstCard', num: '1', partner: '2',  clicked: false}, // img: '117510_3.jpg',
-{ label: 'secondCard', num: '2', partner: '4', clicked: false}, // img: '117510_4.jpg',
-{ label: 'thirdCard', num: '3', partner: '3', clicked: false}, // img: '117510_4.jpg',
-{ label: 'fourthCard', num: '4', partner: '4', clicked: false}, // img: '117510_4.jpg',
-{ label: 'fifthCard', num: '5', partner: '1', clicked: false}, 
+{ label: 'firstCard', num: '1', partner: '2',  clicked: false,imageUrl: '/public/banane.jpg'},
+{ label: 'secondCard', num: '2', partner: '4', clicked: false,imageUrl: '/public/banane.jpg'},
+{ label: 'thirdCard', num: '3', partner: '3', clicked: false,imageUrl: '/public/banane.jpg'},
+{ label: 'fourthCard', num: '4', partner: '4', clicked: false,imageUrl: '/public/banane.jpg'},
+{ label: 'fifthCard', num: '5', partner: '1', clicked: false,imageUrl: '/public/banane.jpg'}
  // img: '117510_11.jpg',
 ];
 
-
+Meteor.subscribe('therapists');
 
 var testBool = false;
 Template.clicking.helpers({
@@ -38,6 +39,12 @@ Template.clicking.helpers({
     }
 
     reader.readAsArrayBuffer(file); //read the file as arraybuffer
+},
+
+'arr': function(){
+	for (var i = cardArray.length - 1; i >= 0; i--) {
+		Meteor.call('insertCard', cardArray[i].label, cardArray[i].num, cardArray[i].partner, false, cardArray[i].imageUrl);
+	}
 }
 
 });

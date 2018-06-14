@@ -1,8 +1,13 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
-
+ 
+Cards = new Mongo.Collection('cards');
 Meteor.startup(() => {
-  // code to run on server at startup
+ 		Cards.insert({
+	cardName: "banane",
+	imageUrl: '/public/banane.jpg',
+
+});
 });
 
 Meteor.methods({
@@ -14,3 +19,4 @@ Meteor.methods({
 Meteor.publish('files', function(){
     return Files.find({});
 });
+
